@@ -84,6 +84,6 @@ function validate(){
 		validateCheckbox(0)
 	];
 
-	//parcours du tableau des contraintes, sort de la boucle à la premiere valeur false et retourne false
+	//si le tableau des contraintes contient false alors retourne !true => false
 	return (!inputsItems.includes(false));
 }
