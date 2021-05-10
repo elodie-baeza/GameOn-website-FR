@@ -10,7 +10,6 @@ function editNav() {
 // DOM Elements
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
-const formData = document.querySelectorAll(".formData");
 const closeBtn = document.querySelectorAll(".close");
 
 // launch modal event
@@ -34,40 +33,32 @@ function closeModal() {
  // DOM elements
 //  const form = document.forms["reserve"];
 const form = document.getElementById("reserve");
-//  const firstName = document.getElementById("first");
-//  const lastName = document.getElementById("last");
-//  const eMail = document.getElementById("email");
-//  const birthDate = document.getElementById("birthdate");
-//  const quantity = document.getElementById("quantity");
-//  const listLocation = document.querySelectorAll('input[type="radio"]');
- const btnSubmit = document.getElementById('btnSubmit');
- const checkRadio = document.querySelectorAll('input[type="radio"]');
- const checkbox = document.querySelectorAll('input[type="checkbox"]');
- const inputs = form.getElementsByTagName('input');
+const firstName = document.getElementById("first");
+const lastName = document.getElementById("last");
+const birthDate = document.getElementById("birthdate");
+const checkRadio = document.querySelectorAll('input[type="radio"]');
+const checkbox = document.querySelectorAll('input[type="checkbox"]');
+const inputs = form.getElementsByTagName('input');
+const formData = document.getElementsByClassName('formData');
 
 // valide si prenom n'est pas vide et au mini 2 caractères
-function validateFirst(){
-	return (inputs["first"].value !== '' && inputs["first"].value.length >= 2);
-}
-
-// valide si nom n'est pas vide et au mini 2 caractères
-function validateLast(){
-	return (inputs["last"].value !== '' && inputs["last"].value.length >= 2);
+function validateText(t){
+	return (t !== '' && t.length >= 2);
 }
 
 // valide syntaxe dans champ email
-function validateEmail(){
-	return (/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(inputs["email"].value));
+function validateEmail(e){
+	return (/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(e));
 }
 
 // valide syntaxe dans champ date de naissance
-function validateDate(){
-	return (/^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/.test(inputs["birthdate"].value));
+function validateDate(d){
+	return (/^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/.test(d));
 } 
 
 // valide champ nbr de tournois non vide
-function validateDate(){
-	return !inputs["quantity"].value == '';
+function validateNbr(n){
+	return !n == '';
 } 
 
 // valide si ville cochée
@@ -77,18 +68,22 @@ function validateRadio() {
 			return true;
 			break;
 	}
+	for (radio of checkRadio){
+		if(!radio.checked)
+			return false;
+	}
 }
 
 // valide si conditions d'utilisations cochée
-function validateCheckbox1(){
-	return (checkbox[0].checked);
+function validateCheckbox(i){
+	return (checkbox[i].checked);
 }
 
 // vérification des contraintes lors de la validation du formulaire
 function validate(){
 
 	//cré un tableau des contraintes valides et non valides	
-	const inputsItems = [validateFirst(),validateLast(),validateEmail(),validateDate(),validateRadio(),validateCheckbox1()];
+	const inputsItems = [validateText(inputs["first"].value),validateText(inputs["last"].value),validateEmail(inputs["email"].value),validateDate(inputs["birthdate"].value),validateNbr(inputs["quantity"].value),validateRadio(),validateCheckbox(0)];
 
 	//parcours du tableau des contraintes, sort de la boucle à la premiere valeur false et retourne false
 	if (inputsItems.includes(false)){
