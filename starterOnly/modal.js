@@ -36,7 +36,6 @@ const form = document.getElementById("reserve");
 const firstName = document.getElementById("first");
 const lastName = document.getElementById("last");
 const birthDate = document.getElementById("birthdate");
-const checkRadio = document.querySelectorAll('input[type="radio"]');
 const checkbox = document.querySelectorAll('input[type="checkbox"]');
 const inputs = form.getElementsByTagName('input');
 const formData = document.getElementsByClassName('formData');
@@ -58,20 +57,12 @@ function validateDate(d){
 
 // valide champ nbr de tournois non vide
 function validateNbr(n){
-	return !n == '';
+	return n !== '';
 } 
 
 // valide si ville cochée
 function validateRadio() {
-	for (radio of checkRadio){
-		if(radio.checked)
-			return true;
-			break;
-	}
-	for (radio of checkRadio){
-		if(!radio.checked)
-			return false;
-	}
+	return document.querySelector('input[type="radio"]').checked;
 }
 
 // valide si conditions d'utilisations cochée
@@ -83,13 +74,16 @@ function validateCheckbox(i){
 function validate(){
 
 	//cré un tableau des contraintes valides et non valides	
-	const inputsItems = [validateText(inputs["first"].value),validateText(inputs["last"].value),validateEmail(inputs["email"].value),validateDate(inputs["birthdate"].value),validateNbr(inputs["quantity"].value),validateRadio(),validateCheckbox(0)];
+	const inputsItems = [
+		validateText(inputs["first"].value),
+		validateText(inputs["last"].value),
+		validateEmail(inputs["email"].value),
+		validateDate(inputs["birthdate"].value),
+		validateNbr(inputs["quantity"].value),
+		validateRadio(),
+		validateCheckbox(0)
+	];
 
 	//parcours du tableau des contraintes, sort de la boucle à la premiere valeur false et retourne false
-	if (inputsItems.includes(false)){
-		return false;
-	} else {
-		btnSubmit.preventDefault();
-		return true;
-	}
+	return (!inputsItems.includes(false));
 }
