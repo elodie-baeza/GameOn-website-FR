@@ -75,10 +75,10 @@ function validateNbr(nbrTournois) {
 
 //valide si ville cochée si nbre de tournois > 0 
 function validateCheckCity(inputName) {
-	if (quantity.value == 0){
+	if (quantity.value == 0) {
 		return document.querySelector('input[name="' + inputName + '"]:checked') == null;
 	}
-	else if (quantity.value > 0){
+	else if (quantity.value > 0) {
 		return document.querySelector('input[name="' + inputName + '"]:checked') !== null;
 	}
 }
@@ -133,18 +133,58 @@ function validateForm() {
 	)
 
 	//renvoie false si le tableau des contraintes contient false
-	console.log(inputsFormStatus.includes(false) !== true);
 	return (inputsFormStatus.includes(false) !== true);
+
+	// return true;
 }
 
 //bloque le bouton "c'est partie" si champs non valident à la soumission du formulaire
 form.addEventListener('submit', function (event) {
+
 	event.preventDefault();
+
 	if (validateForm()) {
-		// @TODO message ok
+		
+		for (child of reserveChildren) {
+			if (child.className == 'formData') {
+				child.setAttribute('style', 'display : none');
+			}
+		}
+
+		document.getElementById('btnSubmit').style.display = 'none';
+
+		redCloseBtn.classList.add('btn-submit');
+		redCloseBtn.innerHTML = 'fermer';
+		reserve.appendChild(redCloseBtn);
+		document.querySelector('#reserve>p').innerHTML = 'Merci ! Votre réservation a été reçue.';
 	}
+
 	return false;
 })
+
+const reserve = document.getElementById('reserve');
+const reserveChildren = reserve.children;
+const redCloseBtn = document.createElement('button');
+
+redCloseBtn.addEventListener('click', function() {
+	closeModal();
+	resumModal();
+})
+
+function resumModal(){
+	for (child of reserveChildren) {
+		if (child.className == 'formData') {
+			child.setAttribute('style', 'display : block');
+		}
+		if (child.querySelector('input')){
+			child.querySelector('input').value = '';
+		}
+	}
+	document.querySelector('#reserve>p').innerHTML = 'Quelle(s) ville(s) ?';
+	reserve.removeChild(redCloseBtn);
+	btnSubmit.style.display = 'block';
+	// checkbox1.unchecked
+}
 
 // champ prénom: affiche message si texte non valide lors de la saisie
 firstName.addEventListener('change', function () {
