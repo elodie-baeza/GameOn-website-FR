@@ -36,9 +36,11 @@ const form = document.getElementById('reserve');
 const firstName = document.getElementById('first');
 const lastName = document.getElementById('last');
 const birthDate = document.getElementById('birthdate');
+const email = document.getElementById('email');
 const checkbox1 = document.getElementById('checkbox1');
 const inputs = form.getElementsByTagName('input');
 const formData = document.getElementsByClassName('formData');
+const btnSubmit = document.getElementById('btnSubmit');
 
 // valide si champ de texte n'est pas vide et au mini 2 caractères
 function validateText(text) {
@@ -91,7 +93,7 @@ function validateForm() {
 	} else {
 	birthDate.parentElement.setAttribute('data-error-visible', 'false');
 	}
-	console.log(validateRadio());
+
 	// Lors de la soumission: affiche message si ville non selectionnée
 	if (validateRadio() == false){
 	formData['location'].setAttribute('data-error', 'Vous devez choisir une option.');
@@ -112,6 +114,13 @@ function validateForm() {
 	return (inputsItems.includes(false) !== true);
 }
 
+//bloque le bouton "c'est partie" si champs non valident à la soumission du formulaire
+form.addEventListener('submit', function(btnSubmit){
+	if (validateForm() == false){
+	btnSubmit.preventDefault();
+	}
+})
+
 // champ prénom: affiche message si texte non valide lors de la saisie
 firstName.addEventListener('change', function(){
 	if (validateText(this) == false){
@@ -120,7 +129,7 @@ firstName.addEventListener('change', function(){
 	} else {
 		firstName.parentElement.setAttribute('data-error-visible', 'false');
 	}
-});
+})
 
 // champ nom: affiche message si texte non valide lors de la saisie
 lastName.addEventListener('change', function(){
@@ -130,4 +139,14 @@ lastName.addEventListener('change', function(){
 	} else {
 		lastName.parentElement.setAttribute('data-error-visible', 'false');
 	}
-});
+})
+
+// champ adresse mail: affiche message si adresse mail valide
+email.addEventListener('change', function(){
+	if (validateText(this) == false){
+		email.parentElement.setAttribute('data-error', 'Veuillez entrer une adresse mail valide.');
+		email.parentElement.setAttribute('data-error-visible', 'true');
+	} else {
+		email.parentElement.setAttribute('data-error-visible', 'false');
+	}
+})
