@@ -85,27 +85,27 @@ function validateForm() {
 	];
 
 	// Lors de la soumiision: affiche message si date non renseignée
-	if (inputsItems[3] == false){
-	formData[3].setAttribute('data-error', 'Vous devez entrer votre date de naissance.');
-	formData[3].setAttribute('data-error-visible', 'true');
+	if (validateDate() == false){
+	birthDate.parentElement.setAttribute('data-error', 'Vous devez entrer votre date de naissance.');
+	birthDate.parentElement.setAttribute('data-error-visible', 'true');
 	} else {
-	formData[3].setAttribute('data-error-visible', 'false');
+	birthDate.parentElement.setAttribute('data-error-visible', 'false');
 	}
-
-	// Lors de la soumiision: affiche message si ville non selectionnée
-	if (inputsItems[5] == false){
-	formData[5].setAttribute('data-error', 'Vous devez choisir une option.');
-	formData[5].setAttribute('data-error-visible', 'true');
+	console.log(validateRadio());
+	// Lors de la soumission: affiche message si ville non selectionnée
+	if (validateRadio() == false){
+	formData['location'].setAttribute('data-error', 'Vous devez choisir une option.');
+	formData['location'].setAttribute('data-error-visible', 'true');
 	} else {
-	formData[5].setAttribute('data-error-visible', 'false');
+	formData['location'].setAttribute('data-error-visible', 'false');
 	}
 
 	// Lors de la soumission: affiche message si termes et conditions non acceptés
-	if (inputsItems[6] == false){
-	formData[6].setAttribute('data-error', 'Vous devez vérifier que vous acceptez les termes et conditions.');
-	formData[6].setAttribute('data-error-visible', 'true');
+	if (validateCheckbox() == false){
+	checkbox1.parentElement.setAttribute('data-error', 'Vous devez vérifier que vous acceptez les termes et conditions.');
+	checkbox1.parentElement.setAttribute('data-error-visible', 'true');
 	} else {
-	formData[6].setAttribute('data-error-visible', 'false');
+	checkbox1.parentElement.setAttribute('data-error-visible', 'false');
 	}
 
 	//renvoie false si le tableau des contraintes contient false
@@ -115,19 +115,19 @@ function validateForm() {
 // champ prénom: affiche message si texte non valide lors de la saisie
 firstName.addEventListener('change', function(){
 	if (validateText(this) == false){
-		formData[0].setAttribute('data-error', 'Veuillez entrer 2 caractères ou plus pour le champ du nom.');
-		formData[0].setAttribute('data-error-visible', 'true');
+		firstName.parentElement.setAttribute('data-error', 'Veuillez entrer 2 caractères ou plus pour le champ du nom.');
+		firstName.parentElement.setAttribute('data-error-visible', 'true');
 	} else {
-		formData[0].setAttribute('data-error-visible', 'false');
+		firstName.parentElement.setAttribute('data-error-visible', 'false');
 	}
 });
 
 // champ nom: affiche message si texte non valide lors de la saisie
 lastName.addEventListener('change', function(){
 	if (validateText(this) == false){
-		formData[1].setAttribute('data-error', 'Veuillez entrer 2 caractères ou plus pour le champ du nom.');
-		formData[1].setAttribute('data-error-visible', 'true');
+		lastName.parentElement.setAttribute('data-error', 'Veuillez entrer 2 caractères ou plus pour le champ du nom.');
+		lastName.parentElement.setAttribute('data-error-visible', 'true');
 	} else {
-		formData[1].setAttribute('data-error-visible', 'false');
+		lastName.parentElement.setAttribute('data-error-visible', 'false');
 	}
 });
