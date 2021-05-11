@@ -40,7 +40,7 @@ const checkbox1 = document.getElementById('checkbox1');
 const inputs = form.getElementsByTagName('input');
 const formData = document.getElementsByClassName('formData');
 
-// valide si prenom n'est pas vide et au mini 2 caractères
+// valide si champ de texte n'est pas vide et au mini 2 caractères
 function validateText(text) {
 	return (text.value !== '' && text.value.length >= 2);
 }
@@ -62,7 +62,7 @@ function validateNbr(nbrTournois) {
 
 // valide si ville cochée
 function validateRadio() {
-	return document.querySelector('input[type="radio"]').checked;
+	return document.querySelector('input[type="radio"]:checked') !== null;
 }
 
 // valide si conditions d'utilisations cochée
@@ -84,6 +84,6 @@ function validateForm() {
 		validateCheckbox()
 	];
 
-	//si le tableau des contraintes contient false alors retourne !true => false
-	return (!inputsItems.includes(false));
+	//renvoie false si le tableau des contraintes contient false
+	return (inputsItems.includes(false) !== true);
 }
