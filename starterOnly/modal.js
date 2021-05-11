@@ -73,9 +73,14 @@ function validateNbr(nbrTournois) {
 	return nbrTournois.value !== '';
 }
 
-// valide si ville cochée
-function validateRadio(inputName) {
-	return document.querySelector('input[name="' + inputName + '"]:checked') !== null;
+//valide si ville cochée si nbre de tournois > 0 
+function validateCheckCity(inputName) {
+	if (quantity.value == 0){
+		return document.querySelector('input[name="' + inputName + '"]:checked') == null;
+	}
+	else if (quantity.value > 0){
+		return document.querySelector('input[name="' + inputName + '"]:checked') !== null;
+	}
 }
 
 // valide si conditions d'utilisations cochée
@@ -102,7 +107,7 @@ function validateForm() {
 		validateEmail(email),
 		validateDate(birthDate),
 		validateNbr(quantity),
-		validateRadio('location'),
+		validateCheckCity('location'),
 		validateCheckbox(checkbox1)
 	];
 
@@ -116,7 +121,7 @@ function validateForm() {
 	// Lors de la soumission: affiche message si ville non selectionnée
 	refreshErrorMessage(
 		formData['location'],
-		validateRadio('location'),
+		validateCheckCity('location'),
 		'Vous devez choisir une option.'
 	)
 
@@ -128,6 +133,7 @@ function validateForm() {
 	)
 
 	//renvoie false si le tableau des contraintes contient false
+	console.log(inputsFormStatus.includes(false) !== true);
 	return (inputsFormStatus.includes(false) !== true);
 }
 
