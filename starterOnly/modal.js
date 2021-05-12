@@ -17,7 +17,7 @@ modalBtn.forEach((btn) => btn.addEventListener('click', launchModal));
 
 // launch modal form
 function launchModal() {
-	modalbg.style.display = "block";
+	modalbg.classList.add('select-block');
 }
 
 // close modal event
@@ -25,7 +25,7 @@ closeBtn.forEach((btn) => btn.addEventListener('click', closeModal));
 
 // close modal form
 function closeModal() {
-	modalbg.style.display = 'none';
+	modalbg.classList.replace('select-block','select-hide');
 }
 
 // DOM elements
@@ -142,18 +142,46 @@ function validateForm() {
 		validateCheckbox(checkbox1)
 	];
 
-	// Lors de la soumiision: affiche message si date non renseignée
+	// Lors de la soumission: affiche message si texte non valide
+	refreshErrorMessage(
+		firstName.parentElement,
+		validateText(firstName),
+		'Veuillez entrer 2 caractères ou plus pour le champ du nom.'
+	)
+
+	// Lors de la soumission: affiche message si texte non valide
+	refreshErrorMessage(
+		lastName.parentElement,
+		validateText(lastName),
+		'Veuillez entrer 2 caractères ou plus pour le champ du nom.'
+	)
+
+	// Lors de la soumission: affiche message si adresse mail non valide
+	refreshErrorMessage(
+		email.parentElement,
+		validateText(email),
+		'Veuillez entrer une adresse mail valide.'
+	)
+
+	// Lors de la soumission: affiche message si date non renseignée
 	refreshErrorMessage(
 		birthDate.parentElement,
 		validateDate(birthDate),
 		'Vous devez entrer votre date de naissance.'
 	)
 
+	// Lors de la soumission: affiche message si nbr tournois non renseigné
+	refreshErrorMessage(
+		quantity.parentElement,
+		validateNbr(quantity),
+		'Veuillez renseigner ce champ.'
+	)
+
 	// Lors de la soumission: affiche message si ville non selectionnée
 	refreshErrorMessage(
 		formData['location'],
 		validateCheckCity('location'),
-		'Vous devez choisir une option.'
+		"Si c'est votre premier tournois, décochez toutes les villes."
 	)
 
 	// Lors de la soumission: affiche message si termes et conditions non acceptés
@@ -177,11 +205,11 @@ form.addEventListener('submit', function (event) {
 		//Cache tous les enfants .formData du formulaire #reserve
 		for (child of reserveChildren) {
 			if (child.className == 'formData') {
-				child.setAttribute('style', 'display : none');
+				child.classList.add('select-hide');
 			}
 		}
 		//cache le bouton btnSubmit de formulaire #reserve
-		document.getElementById('btnSubmit').style.display = 'none';
+		document.getElementById('btnSubmit').classList.add('select-hide');
 		//change la classe et le texte du paragraphe "Quelle(s) ville(s)"
 		document.querySelector('#reserve>p').classList.replace('text-label','text-label-valid-form');
 		document.querySelector('#reserve>p').innerHTML = "Merci pour votre inscription ! Votre réservation a été enregistrée.";
@@ -200,8 +228,9 @@ form.addEventListener('submit', function (event) {
 function resumModal(){
 	for (child of reserveChildren) {
 		//rend visible toutes les div .formData
-		if (child.className == 'formData') {
-			child.setAttribute('style', 'display : block');
+		if (child.className == 'formData select-hide') {
+			child.classList.replace('select-hide','select-block');
+			child.classList.remove('select-block');
 		}
 		//vide les champs de texte
 		if (child.querySelector('.text-control')){
@@ -215,7 +244,8 @@ function resumModal(){
 	reserve.removeChild(redCloseBtn);
 
 	//bouton "C'est parti" passe de caché à visible
-	btnSubmit.style.display = 'block';
+	btnSubmit.classList.replace('select-hide','select-block');
+	btnSubmit.classList.remove('select-block');
 
 	//réinitialise les cases cochées
 	for (item of document.querySelectorAll('.checkbox-input:checked')){
