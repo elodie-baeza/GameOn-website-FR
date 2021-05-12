@@ -181,7 +181,7 @@ function validateForm() {
 
 	// Lors de la soumission: affiche message si ville non selectionnée
 	refreshErrorMessage(
-		formData['location'],
+		formData[5],
 		validateCheckCity('location'),
 		"Si c'est votre premier tournois, décochez toutes les villes."
 	)
