@@ -17,6 +17,7 @@ modalBtn.forEach((btn) => btn.addEventListener('click', launchModal));
 
 // launch modal form
 function launchModal() {
+	modalbg.classList.remove('select-hide');
 	modalbg.classList.add('select-block');
 }
 
@@ -25,7 +26,8 @@ closeBtn.forEach((btn) => btn.addEventListener('click', closeModal));
 
 // close modal form
 function closeModal() {
-	modalbg.classList.replace('select-block','select-hide');
+	modalbg.classList.remove('select-block');
+	modalbg.classList.add('select-hide');
 }
 
 // DOM elements
