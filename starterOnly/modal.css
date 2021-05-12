@@ -404,6 +404,13 @@ input[data-error]::after {
   font-weight: normal;
   font-size: 16px;
 }
+/* texte formulaire de confirmation de reservation */
+.text-label-valid-form {
+  font-weight: normal;
+  font-size: 36px;
+  margin: 13rem 0;
+  text-align: center;
+}
 .hero-section {
   min-height: 93vh;
   border-radius: 10px;
