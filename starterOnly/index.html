@@ -11,7 +11,7 @@
   <body>
     <div class="topnav" id="myTopnav">
       <div class="header-logo">
-      <img alt="logo" src="Logo.png" width="auto" height="auto" />
+      <img alt="logo" src="Logo.png" />
     </div>
     <div class="main-navbar">
       
@@ -25,7 +25,6 @@
       </a>
     </div>
     </div>
-  </div>
     <main>
       <div class="hero-section">
         <div class="hero-content">
@@ -101,7 +100,7 @@
                 <input type="number" class="text-control" id="quantity" name="quantity" min="0" max="99">
               </div>
               <p class="text-label">Quelle(s) ville(s) ?</p>
-              <div class="formData" name="location">
+              <div class="formData" id="locations">
                 <input
                   class="checkbox-input"
                   type="checkbox"
@@ -171,7 +170,7 @@
               </div>
               <div class="formData">
                 <input class="checkbox-input" type="checkbox" id="checkbox1"/>
-                <label class="checkbox2-label" for="checkbox1" required>
+                <label class="checkbox2-label" for="checkbox1">
                   <span class="checkbox-icon"></span>
                   J'ai lu et accepté les conditions d'utilisation.
                 </label>
@@ -187,7 +186,6 @@
                 class="btn-submit"
                 id="btnSubmit"
                 type="submit"
-                class="button"
                 value="C'est parti"
               />
             </form>
