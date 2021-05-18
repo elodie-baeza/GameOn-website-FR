@@ -55,23 +55,12 @@ function validateText(text) {
 
 // valide syntaxe dans champ email
 function validateEmail(email) {
-	return (/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(email.value));
+	return (/^([A-Z|a-z|0-9](\.|_){0,1})+[A-Z|a-z|0-9]\@([A-Z|a-z|0-9])+((\.){0,1}[A-Z|a-z|0-9]){2}\.[a-z]{2,3}$/.test(email.value));
 }
 
 // valide syntaxe dans champ date de naissance
-/**
- * valide un champ de type date
- * @param {*} date 
- * @returns 
- */
 function validateDate(date) {
-	isValid = (date.value !== '');
-	refreshErrorMessage(
-		date.parentElement,
-		isValid,
-		'Vous devez entrer votre date de naissance.'
-	)
-	return isValid;
+	return date.value !== '';
 }
 
 // valide champ nbr de tournois non vide
@@ -133,7 +122,7 @@ email.addEventListener('change', function () {
 // vérification des contraintes lors de la validation du formulaire
 function validateForm() {
 
-	//cré un tableau des contraintes valides et non valides	
+	//cré un tableau des champs valides et non valides	
 	const inputsFormStatus = [
 		validateText(firstName),
 		validateText(lastName),
@@ -163,6 +152,12 @@ function validateForm() {
 		email.parentElement,
 		validateText(email),
 		'Veuillez entrer une adresse mail valide.'
+	)
+
+	refreshErrorMessage(
+		birthDate.parentElement,
+		validateDate(birthDate),
+		'Vous devez entrer votre date de naissance.'
 	)
 
 	// Lors de la soumission: affiche message si date non renseignée
@@ -199,7 +194,7 @@ function validateForm() {
 
 //Vérifie les champs du formulaire à la soumission.
 form.addEventListener('submit', function (event) {
-	//Ne prend pas en compte l'action par default du le bouton de soumission "c'est partie".
+	//Ne prend pas en compte l'action par default du bouton de soumission "c'est partie".
 	event.preventDefault();
 
 	//Si formulaire valide, transforme le formulaire d'inscription en fenêtre de confirmation de réservation.
@@ -210,8 +205,10 @@ form.addEventListener('submit', function (event) {
 				child.classList.add('select-hide');
 			}
 		}
+		//cache le bouton close
+		document.querySelector('.close').classList.add('select-hide');
 		//cache le bouton btnSubmit de formulaire #reserve
-		document.getElementById('btnSubmit').classList.add('select-hide');
+		btnSubmit.classList.add('select-hide');
 		//change la classe et le texte du paragraphe "Quelle(s) ville(s)"
 		document.querySelector('#reserve>p').classList.replace('text-label','text-label-valid-form');
 		document.querySelector('#reserve>p').innerHTML = "Merci pour votre inscription ! Votre réservation a été enregistrée.";
@@ -221,42 +218,50 @@ form.addEventListener('submit', function (event) {
 		// ajoute bouton dans HTML en enfant du formulaire.
 		reserve.appendChild(redCloseBtn);
 	}
-
+	//si formulaire non validé, retourne FALSE
 	return false;
-
 })
 
 // Met en visible et réinitialise tous les champs du formulaire d'inscription
 function resumModal(){
 	for (child of reserveChildren) {
-		//rend visible toutes les div .formData
+		//rend visible toutes les div .formData et supprime la classe temporaire
 		if (child.className == 'formData select-hide') {
 			child.classList.replace('select-hide','select-block');
 			child.classList.remove('select-block');
 		}
-		//vide les champs de texte
-		if (child.querySelector('.text-control')){
-			child.querySelector('.text-control').value = '';
-		}
 	}
+	//affiche le bouton close
+	document.querySelector('.close').classList.replace('select-hide','select-block');
+	document.querySelector('.close').classList.remove('select-block');
 	//remet la class et le texte d'origine au paragraphe du formulaire de reservation.
 	document.querySelector('#reserve>p').classList.replace('text-label-valid-form','text-label');
 	document.querySelector('#reserve>p').innerHTML = 'Quelle(s) ville(s) ?';
 	//supprime le bouton "fermer" du HTML
 	reserve.removeChild(redCloseBtn);
 
-	//bouton "C'est parti" passe de caché à visible
+	//bouton "C'est parti" passe de caché à visible et supprime la classe temporaire
 	btnSubmit.classList.replace('select-hide','select-block');
 	btnSubmit.classList.remove('select-block');
+}
 
-	//réinitialise les cases cochées
+function initModal(){
+	for (child of reserveChildren) {
+		//vide les champs de texte
+		if (child.querySelector('.text-control')){
+			child.querySelector('.text-control').value = '';
+		}
+	}
+
+	//Décoche les checkboxs cochées
 	for (item of document.querySelectorAll('.checkbox-input:checked')){
 		item.checked = false
-	}
+	}	
 }
 
 // Lors du click sur le bouton "fermer" de la fenêtre de confirmation d'inscription, ferme et réinitialise de formulaire d'inscription.
 redCloseBtn.addEventListener('click', function() {
 	closeModal();
 	resumModal();
+	initModal();
 })
