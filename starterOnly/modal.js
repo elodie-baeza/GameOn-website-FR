@@ -58,14 +58,9 @@ function validateEmail(email) {
 	return (/^([A-Z|a-z|0-9](\.|_){0,1})+[A-Z|a-z|0-9]\@([A-Z|a-z|0-9])+((\.){0,1}[A-Z|a-z|0-9]){2}\.[a-z]{2,3}$/.test(email.value));
 }
 
-// valide syntaxe dans champ date de naissance
-function validateDate(date) {
-	return date.value !== '';
-}
-
-// valide champ nbr de tournois non vide
-function validateNbr(nbrTournois) {
-	return nbrTournois.value !== '';
+// valide que champ non vide
+function validateValue(val) {
+	return val.value !== '';
 }
 
 //valide si ville cochée si nbre de tournois > 0 
@@ -127,8 +122,8 @@ function validateForm() {
 		validateText(firstName),
 		validateText(lastName),
 		validateEmail(email),
-		validateDate(birthDate),
-		validateNbr(quantity),
+		validateValue(birthDate),
+		validateValue(quantity),
 		validateCheckCity('location'),
 		validateCheckbox(checkbox1)
 	];
@@ -156,21 +151,21 @@ function validateForm() {
 
 	refreshErrorMessage(
 		birthDate.parentElement,
-		validateDate(birthDate),
+		validateValue(birthDate),
 		'Vous devez entrer votre date de naissance.'
 	)
 
 	// Lors de la soumission: affiche message si date non renseignée
 	refreshErrorMessage(
 		birthDate.parentElement,
-		validateDate(birthDate),
+		validateValue(birthDate),
 		'Vous devez entrer votre date de naissance.'
 	)
 
 	// Lors de la soumission: affiche message si nbr tournois non renseigné
 	refreshErrorMessage(
 		quantity.parentElement,
-		validateNbr(quantity),
+		validateValue(quantity),
 		'Veuillez renseigner ce champ.'
 	)
 
