@@ -506,7 +506,7 @@ footer {
     margin-bottom: 0;
   }
   .content {
-    height: 140%;
+    height: 150%;
     margin: 3rem 0 0 0;
   }
   .hero-section {
@@ -566,6 +566,7 @@ footer {
   }
   .formData[data-error-visible="true"]::after {
     font-size: 0.7rem;
+    line-height: 0.5rem;
   }
 }
 
