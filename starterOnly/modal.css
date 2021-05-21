@@ -168,7 +168,7 @@ main {
   height: 100%;
   width: 100%;
   overflow: auto;
-  background-color: transparent;
+  background-color: rgba(26, 39, 156, 0.4);
 }
 
 .content {
@@ -506,7 +506,7 @@ footer {
     margin-bottom: 0;
   }
   .content {
-    height: 100%;
+    height: 120%;
     margin: 3rem 0 0 0;
   }
   .hero-section {
@@ -551,6 +551,9 @@ footer {
   label {
     font-size: 14px;
     margin: 8px 0;
+  }
+  .text-control{
+    height: auto;
   }
   .text-label {
     font-size: 14px;
